@@ -1,0 +1,11 @@
+import 'dotenv/config';
+import express from 'express';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createApp } from './app.js';
+if(process.env.MONGODB_URI&&!process.env.JWT_SECRET) throw Error('Set JWT_SECRET before using MongoDB.');
+const app=await createApp({mongoUri:process.env.MONGODB_URI,secret:process.env.JWT_SECRET||undefined});
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+app.use(express.static(path.join(root,'dist')));
+app.get('/{*path}',(req,res)=>res.sendFile(path.join(root,'dist','index.html')));
+app.listen(process.env.PORT||4000,'127.0.0.1',()=>console.log(`SkillSwap API: http://127.0.0.1:${process.env.PORT||4000} (${process.env.MONGODB_URI?'MongoDB':'in-memory demo'})`));
