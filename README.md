@@ -49,6 +49,24 @@ The production server serves the React build and API together at **http://127.0.
 
 Session scheduling and reviews are reserved for a later release, as described in the project scope. Public deployment still needs HTTPS, environment secrets, an accessible MongoDB service, and operational protections such as authentication rate limiting.
 
+## Frontend code structure
+
+The frontend uses plain React function components, props, `useState`, and `useEffect`.
+
+```text
+src/
+  main.jsx          Mounts the app and loads CSS
+  App.jsx           Account state, API actions, and page navigation
+  api.js            Shared fetch helper
+  components/       Sidebar, header, student card, modal, and forms
+  pages/            Discovery, connections, and your profile
+  styles.css        Responsive styles
+```
+
+Start with `App.jsx` to follow the application flow. Page components receive data and event handlers through props. Discovery keeps its search and filter state locally. Forms use native HTML inputs and `FormData`; submitting a form calls the corresponding handler in `App.jsx`. The modal keeps keyboard focus and scroll handling in one place.
+
+Run `npm run format` to keep the frontend formatting consistent.
+
 ## REST API
 
 | Method | Endpoint | Purpose |
