@@ -1,4 +1,17 @@
+# Dependencies and build output (including nested applications)
 node_modules/
 dist/
+.vite/
+coverage/
+
+# Local environment files; commit examples only
 .env
+.env.*
+!.env.example
+
+# Logs and editor / operating system files
 *.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

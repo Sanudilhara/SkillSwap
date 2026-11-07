@@ -1,81 +1,113 @@
 # SkillSwap
 
-A student skill exchange platform built with React, Express, and MongoDB. Discover students, share teaching and learning skills, find reciprocal matches, and send or respond to connection requests.
+A student skill-exchange project. Phase 1 establishes a small, easy-to-read React
+frontend and Express backend. Authentication and MongoDB are deferred.
 
-## Run locally
+## Requirements
 
-Requires Node.js 22.12+.
+- Node.js 22.12 or newer (verified locally with Node.js 24.14.0).
+- npm (included with Node.js).
+- Two terminals, one for each application.
+
+## Run the backend
+
+In PowerShell:
 
 ```powershell
+cd C:\Users\Sanu\Desktop\SkillSwap\backend
 npm install
-Copy-Item .env.example .env
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
 npm run dev
 ```
 
-Open **http://127.0.0.1:5173**. Vite proxies `/api` to Express on port 4000.
+API: **http://127.0.0.1:4000/api/health**.
+The ignored `backend/.env` sets `PORT=4000`. Nodemon restarts the backend when
+JavaScript files change. Restart manually after changing `.env`.
 
-Without `MONGODB_URI`, the app starts in a labeled, in-memory demo workspace with six sample students and an automatically created demo profile. Registration, login, profile editing, searching, matching, and requests all use the real REST API. Data resets when the server restarts, and the generated signing secret invalidates previous demo tokens. Seed profiles use external avatar images with initials as a fallback.
+## Run the frontend
 
-## Use MongoDB
-
-Set these values in `.env`:
-
-```dotenv
-MONGODB_URI=mongodb://127.0.0.1:27017/skillswap
-JWT_SECRET=replace-with-a-long-random-secret
-CLIENT_ORIGIN=http://127.0.0.1:5173
-PORT=4000
-```
-
-Restart the app and create accounts. MongoDB mode stores users and requests durably and does not create sample users or enable demo login. To try the complete request lifecycle, register two accounts, send a request from one, then sign in to the recipient to accept or decline it. Sessions last seven days. Passwords are hashed with bcrypt; API requests use signed bearer tokens.
-
-## Build and test
+In a second PowerShell terminal:
 
 ```powershell
-npm test
-npm run build
-npm start
+cd C:\Users\Sanu\Desktop\SkillSwap\frontend
+npm install
+npm run dev
 ```
 
-The production server serves the React build and API together at **http://127.0.0.1:4000**. The integration test verifies authentication, profile validation, reciprocal matching, duplicate requests, and recipient-only request responses in demo storage. MongoDB connectivity requires your own running database and is not covered by this test.
+Open the URL printed by Vite, normally **http://127.0.0.1:5173**.
+If that port is busy, Vite chooses the next available port.
+`npm start` also starts the frontend development server.
+Home and About use React Router.
+The frontend runs independently of the API in this phase.
+Stop each application with Ctrl+C in its terminal.
 
-## Core behavior
-
-- Search by student name, university, teaching skills, or learning skills; filter by skill category and university.
-- A reciprocal match requires at least one skill you want to learn that the student teaches, plus one skill you teach that they want to learn. Skill comparisons ignore case.
-- Edit your name, university, field, introduction, HTTPS profile picture URL, and comma-separated teaching and learning skills.
-- Send one request per student pair. Recipients can accept or decline pending requests.
-- Profiles and connection data require authentication. Passwords and email addresses are excluded from student API responses.
-
-Session scheduling and reviews are reserved for a later release, as described in the project scope. Public deployment still needs HTTPS, environment secrets, an accessible MongoDB service, and operational protections such as authentication rate limiting.
-
-## Frontend code structure
-
-The frontend uses plain React function components, props, `useState`, and `useEffect`.
+## Structure
 
 ```text
-src/
-  main.jsx          Mounts the app and loads CSS
-  App.jsx           Account state, API actions, and page navigation
-  api.js            Shared fetch helper
-  components/       Sidebar, header, student card, modal, and forms
-  pages/            Discovery, connections, and your profile
-  styles.css        Responsive styles
+SkillSwap/
+  frontend/
+    src/
+      pages/
+        HomePage.jsx
+        AboutPage.jsx
+      App.jsx
+      main.jsx
+      index.css
+    .gitignore
+    index.html
+    package.json
+    package-lock.json
+    vite.config.js
+  backend/
+    src/
+      app.js
+      server.js
+      app.test.js
+    .env.example
+    .gitignore
+    package.json
+    package-lock.json
+  docs/
+    setup/
+    architecture/
+    api/
+    README.md
+    phase-1.md
+    verification.md
+  README.md
+  .gitignore
 ```
 
-Start with `App.jsx` to follow the application flow. Page components receive data and event handlers through props. Discovery keeps its search and filter state locally. Forms use native HTML inputs and `FormData`; submitting a form calls the corresponding handler in `App.jsx`. The modal keeps keyboard focus and scroll handling in one place.
+See the [file-by-file guide](docs/architecture/project-structure.md) and
+[documentation index](docs/README.md).
 
-Run `npm run format` to keep the frontend formatting consistent.
+## Test and build
 
-## REST API
+From the project root, after installing both apps:
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| GET | `/api/health` | Health and storage mode |
-| POST | `/api/auth/register` | Create an account |
-| POST | `/api/auth/login` | Start a session |
-| POST | `/api/auth/demo` | Create a temporary demo session (demo mode only) |
-| GET / PUT | `/api/me` | Read or update your profile |
-| GET | `/api/students` | List students with match metadata |
-| GET / POST | `/api/connections` | Read or send requests |
-| PATCH | `/api/connections/:id` | Accept or decline a received request |
+```powershell
+npm --prefix backend test
+npm --prefix frontend run build
+```
+
+The backend test checks the real HTTP health response. The frontend build checks
+that JSX and imports compile for production. See [verification results](docs/verification.md)
+for the checks performed during implementation and their limits.
+
+To preview a frontend build, run `npm run preview` inside `frontend` and open the
+printed URL. Run `npm start` inside `backend` to start the API without nodemon.
+There is no root npm command or combined production server.
+
+## Cleanup
+
+The obsolete local project backup and root Vite cache have been removed.
+The previous tracked implementation remains in Git history.
+The active Phase 1 code has no authentication, database, or connection features.
+
+Development stops at Phase 1 until the next phase is confirmed.
+
+## References
+
+- [Vite guide](https://vite.dev/guide/)
+- [React Router declarative setup](https://reactrouter.com/start/declarative/installation)
+- [Express basic server](https://expressjs.com/en/starter/hello-world/)
