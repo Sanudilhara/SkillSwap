@@ -37,8 +37,10 @@ npm run dev
 Open the URL printed by Vite, normally **http://127.0.0.1:5173**.
 If that port is busy, Vite chooses the next available port.
 `npm start` also starts the frontend development server.
-Home and About use React Router.
+Home, Login, Register, Forgot Password, and About use React Router.
 The frontend runs independently of the API in this phase.
+The account forms provide input validation and clear unavailable messages; they
+do not create accounts, sign users in, or send password-reset emails yet.
 Stop each application with Ctrl+C in its terminal.
 
 ## Structure
@@ -46,10 +48,15 @@ Stop each application with Ctrl+C in its terminal.
 ```text
 SkillSwap/
   frontend/
+    public/
+      favicon.svg
     src/
       pages/
         HomePage.jsx
         AboutPage.jsx
+        LoginPage.jsx
+        RegisterPage.jsx
+        ForgotPasswordPage.jsx
       App.jsx
       main.jsx
       index.css
