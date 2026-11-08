@@ -2,6 +2,7 @@
 
 A student skill-exchange project. Phase 1 establishes a small, easy-to-read React
 frontend and Express backend. Authentication and MongoDB are deferred.
+The public pages use Tailwind CSS with a colorful, responsive design.
 
 ## Requirements
 
@@ -51,6 +52,9 @@ SkillSwap/
     public/
       favicon.svg
     src/
+      components/
+        Brand.jsx
+        AuthLayout.jsx
       pages/
         HomePage.jsx
         AboutPage.jsx
@@ -88,6 +92,14 @@ SkillSwap/
 See the [file-by-file guide](docs/architecture/project-structure.md) and
 [documentation index](docs/README.md).
 
+## Frontend styling
+
+Tailwind CSS 4 is connected through `@tailwindcss/vite` in `frontend/vite.config.js`.
+`frontend/src/index.css` imports Tailwind and defines a few shared button, input,
+and text styles. Page components use standard JSX and Tailwind utility classes.
+`AuthLayout.jsx` shares the layout for Login, Register, and Forgot Password;
+`Brand.jsx` shares the logo. No additional UI library or state library is used.
+
 ## Test and build
 
 From the project root, after installing both apps:
@@ -118,3 +130,4 @@ Development stops at Phase 1 until the next phase is confirmed.
 - [Vite guide](https://vite.dev/guide/)
 - [React Router declarative setup](https://reactrouter.com/start/declarative/installation)
 - [Express basic server](https://expressjs.com/en/starter/hello-world/)
+- [Tailwind CSS with Vite](https://tailwindcss.com/docs/installation/using-vite)

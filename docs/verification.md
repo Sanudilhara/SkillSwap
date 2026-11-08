@@ -1,5 +1,22 @@
 # Phase 1 verification
 
+## Public pages and Tailwind redesign - November 7, 2026
+
+- Tailwind CSS 4.3.5 and `@tailwindcss/vite` installed successfully.
+- Frontend production build passed: 45 modules transformed; CSS and JS generated.
+- Real Chromium browser checks passed for Home, Login, Register, Forgot Password,
+  About, and the missing-page fallback.
+- Verified gradient styles are applied and header section links scroll to their
+  targets, including sections near the bottom of the page.
+- Verified required inputs, email format, minimum password length, mismatched
+  passwords, confirmation-field focus, and unavailable submit messages.
+- Verified login show/hide password behavior and account-page navigation.
+- All six routes fit widths of 320, 390, 768, and 1440 pixels without horizontal overflow.
+- Browser checks recorded zero JavaScript errors, failed resources, or credential submissions.
+- Desktop and mobile screenshots were captured; the landing desktop, login desktop,
+  and registration mobile screenshots were visually reviewed.
+- Account actions remain frontend-only. No backend authentication or database was added.
+
 ## Cleanup verification — November 7, 2026
 
 - Removed the obsolete `.phase1-backup/` directory and root `.vite/` cache.
