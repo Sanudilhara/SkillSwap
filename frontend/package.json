@@ -7,6 +7,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "format": "prettier --write src test",
+    "format:check": "prettier --check src test",
+    "test": "node --test",
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
@@ -20,6 +23,8 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",
     "@vitejs/plugin-react": "^5.0.4",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5",
     "vite": "^7.1.10"
   }
