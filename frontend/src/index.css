@@ -1,7 +1,7 @@
-﻿@import "tailwindcss";
+﻿@import 'tailwindcss';
 
 @theme {
-  --font-sans: "Segoe UI", Arial, sans-serif;
+  --font-sans: 'Segoe UI', Arial, sans-serif;
 }
 
 @layer base {
@@ -9,12 +9,19 @@
     @apply m-0 bg-white font-sans text-slate-900 antialiased;
   }
 
-  a, button, input, select, textarea {
+  a,
+  button,
+  input,
+  select,
+  textarea {
     @apply outline-offset-4 focus-visible:outline-2 focus-visible:outline-violet-500;
   }
 
   button {
     @apply cursor-pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
   }
 
   section[id] {
@@ -59,7 +66,7 @@
     @apply block w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:ring-4 focus:ring-violet-100 focus:outline-none;
   }
 
-  .form-input[aria-invalid="true"] {
+  .form-input[aria-invalid='true'] {
     @apply border-rose-400;
   }
 
@@ -73,13 +80,147 @@
 }
 
 .page-gradient {
-  background: radial-gradient(ellipse at 0% 0%, #e9ddff 0%, transparent 55%),
-              radial-gradient(ellipse at 100% 20%, #ffe0e8 0%, transparent 55%),
-              linear-gradient(120deg, #f5f1ff, #fdfaff 55%, #fff1f5);
+  background:
+    radial-gradient(ellipse at 0% 0%, #e9ddff 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 20%, #ffe0e8 0%, transparent 55%),
+    linear-gradient(120deg, #f5f1ff, #fdfaff 55%, #fff1f5);
+}
+
+/* Fluid page edges keep large displays useful without stretching form fields. */
+.site-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 6rem);
+}
+
+.auth-page {
+  display: flex;
+  flex: 1;
+}
+
+.auth-grid {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 1.25rem;
+}
+
+.auth-form-panel {
+  width: 100%;
+  min-width: 0;
+}
+
+.auth-form-card {
+  width: 100%;
+  max-width: 32rem;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid white;
+  border-radius: 1.75rem;
+  background: rgb(255 255 255 / 96%);
+  box-shadow: 0 24px 70px -30px rgb(109 40 217 / 25%);
+}
+
+.auth-headline {
+  font-size: clamp(2.75rem, 3.6vw, 4.75rem);
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+/* Shared workspace layout; sidebar styling lives in Tailwind classes. */
+.workspace-shell {
+  display: flex;
+}
+
+.workspace-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-welcome {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 1rem;
+  background: linear-gradient(120deg, #6d28d9, #9333ea 65%, #db2777);
+  color: white;
+}
+
+.welcome-art {
+  display: none;
+}
+
+.score-ring {
+  display: grid;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#8b5cf6 var(--score), #ede9fe 0);
+}
+
+.score-ring > span {
+  display: grid;
+  width: 80px;
+  height: 80px;
+  place-content: center;
+  border-radius: 50%;
+  background: white;
+  color: #6d28d9;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.score-ring small {
+  font-size: 12px;
+}
+
+.message-layout {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+}
+
+@media (min-width: 768px) {
+  .message-layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 640px) {
+  .auth-grid {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .auth-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    padding: 0;
+  }
+
+  .auth-story {
+    padding: clamp(3rem, 5vw, 7rem) clamp(2.5rem, 5vw, 7rem);
+  }
+
+  .auth-form-panel {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    padding: 3rem clamp(2rem, 4vw, 6rem);
+    border-left: 1px solid rgb(255 255 255 / 70%);
+    background: rgb(255 255 255 / 30%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
   }
 }
